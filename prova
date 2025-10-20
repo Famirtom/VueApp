@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Sezione intro con mini-libri</title>
+<style>
+  :root{
+    --cover:#f3e7c9;     /* colore copertina */
+    --spine:#e2d3a9;     /* colore dorso */
+    --paper:#fffdf7;     /* colore pagine */
+    --ink:#2b2b2b;       /* testo */
+    --accent:#7a4bff;    /* accent/ombra */
+    --radius:18px;
+  }
+
+  body{
+    margin:0;
+    font:16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji";
+    background: radial-gradient(1200px 600px at 20% -10%, #faf7ff 0, #ffffff 40%, #f7f7fb 100%);
+    color:var(--ink);
+  }
+
+  .intro{
+    max-width:1100px;
+    margin:48px auto;
+    padding:0 20px 48px;
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap:24px;
+  }
+
+  /* Mini book base (usa <details>) */
+  .mini-book{
+    position:relative;
+    border-radius:var(--radius);
+    box-shadow: 0 8px 24px rgba(32,25,63,.10), 0 2px 6px rgba(0,0,0,.05);
+    background:var(--paper);
+    overflow:hidden;
+    transition: transform .2s ease, box-shadow .3s ease;
+    outline: none;
+  }
+  .mini-book:has(> summary:focus-visible){ box-shadow: 0 0 0 3px rgba(122,75,255,.35), 0 10px 28px rgba(32,25,63,.16); }
+  .mini-book:hover{ transform: translateY(-2px); }
+
+  /* Dorso del libro */
+  .mini-book::before{
+    content:"";
+    position:absolute; inset:0 auto 0 0;
+    width:18px;
+    background:linear-gradient(90deg, var(--spine), var(--spine) 60%, rgba(0,0,0,.03));
+    box-shadow: inset -1px 0 0 rgba(0,0,0,.06);
+  }
+
+  /* Copertina animata (il "front") */
+  .mini-book::after{
+    content:"";
+    position:absolute; inset:0;
+    background:var(--cover);
+    transform-origin: left center;
+    transform: perspective(800px) rotateY(0deg);
+    transition: transform .6s cubic-bezier(.2,.7,.1,1), box-shadow .6s;
+    border-radius:var(--radius);
+    box-shadow: inset -8px 0 12px rgba(0,0,0,.06);
+    pointer-events:none;
+  }
+  .mini-book[open]::after{
+    transform: perspective(800px) rotateY(-130deg);
+    box-shadow: inset -2px 0 6px rgba(0,0,0,.1);
+  }
+
+  /* Testata (summary = “titolo sul frontespizio”) */
+  .mini-book > summary{
+    list-style:none;
+    cursor:pointer;
+    padding:22px 22px 22px 34px; /* spazio per il dorso */
+    position:relative;
+    z-index:1;
+    font-weight:600;
+  }
+  .mini-book > summary::-webkit-details-marker{ display:none; }
+
+  /* Icona “apri/chiudi” */
+  .mini-book > summary .chev{
+    position:absolute; right:16px; top:18px;
+    width:28px; height:28px;
+    border-radius:50%;
+    display:grid; place-items:center;
+    background:#f2efff;
+    box-shadow: inset 0 0 0 1px rgba(122,75,255,.25);
+    font: 700 14px/1 monospace;
+    color:#4b34a3;
+    transform: rotate(0deg);
+    transition: transform .3s ease;
+  }
+  .mini-book[open] > summary .chev{ transform: rotate(90deg); }
+
+  /* Contenuto (pagine) */
+  .mini-book .page{
+    padding:6px 20px 20px 34px;
+    background:
+      linear-gradient(90deg, rgba(0,0,0,.025), rgba(0,0,0,0) 12px),
+      repeating-linear-gradient(#fff0 0, #fff0 24px, rgba(0,0,0,.02) 24px, rgba(0,0,0,.02) 25px);
+  }
+
+  .mini-book .page p{ margin: 12px 0; }
+
+  /* Piccoli badge/tema */
+  .tag{
+    display:inline-block; font-size:.75rem; font-weight:600;
+    padding:.25rem .5rem; border-radius:999px;
+    background:#efeaff; color:#4528c6; margin-right:.4rem;
+  }
+
+  /* Ridurre il “salto” layout quando si apre */
+  .mini-book{ contain: layout paint; }
+</style>
+</head>
+<body>
+
+<section class="intro">
+  <!-- Libro 1 -->
+  <details class="mini-book">
+    <summary>
+      <span class="tag">Intro</span>
+      Benvenutə nella nostra sezione
+      <span class="chev">›</span>
+    </summary>
+    <div class="page">
+      <p>
+        Questo è un paragrafo di esempio: puoi descrivere il progetto, i valori,
+        o qualunque cosa tu voglia raccontare quando il libricino si apre.
+      </p>
+      <p>
+        Suggerimento: mantieni i testi brevi per non appesantire l’esperienza.
+      </p>
+    </div>
+  </details>
+
+  <!-- Libro 2 -->
+  <details class="mini-book">
+    <summary>
+      <span class="tag">Chi siamo</span>
+      La nostra storia
+      <span class="chev">›</span>
+    </summary>
+    <div class="page">
+      <p>
+        Nato come piccolo esperimento, il team è cresciuto con persone curiose
+        e appassionate di design e web.
+      </p>
+    </div>
+  </details>
+
+  <!-- Libro 3 -->
+  <details class="mini-book">
+    <summary>
+      <span class="tag">Servizi</span>
+      Cosa facciamo
+      <span class="chev">›</span>
+    </summary>
+    <div class="page">
+      <p>
+        UI/UX, sviluppo front-end, branding leggero e micro-interazioni
+        eleganti come questi mini-libri.
+      </p>
+    </div>
+  </details>
+</section>
+
+</body>
+</html>
