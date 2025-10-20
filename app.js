@@ -94,7 +94,7 @@ var webstore = new Vue({
             aVal = a.price;
             bVal = b.price;
             break;
-          case 'availability':
+          case 'availableInventory':
             aVal = a.availableInventory;
             bVal = b.availableInventory;
             break;
