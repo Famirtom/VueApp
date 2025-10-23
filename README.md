@@ -64,3 +64,10 @@ style.css - styles
 - This repo intentionally avoids Vue CLI; it’s a **static** Vue app for GitHub Pages.  
 - No libraries are used that replicate Vue features (compliant with the brief).  
 - Images and paths are case-sensitive on GitHub Pages (folder `Images/`).
+
+e
+
+te
+t
+et
+eteteteteetetetetkkkkkkk
