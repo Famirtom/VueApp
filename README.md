@@ -65,7 +65,6 @@ style.css - styles
 - No libraries are used that replicate Vue features (compliant with the brief).  
 - Images and paths are case-sensitive on GitHub Pages (folder `Images/`).
 
-e
 
 te
 t
