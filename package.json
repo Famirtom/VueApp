@@ -1,11 +1,9 @@
 {
-  "name": "VueApp",
+  "name": "vueapp",
   "version": "1.0.0",
-  "devDependencies": {
-    "gh-pages": "^6.3.0"
-  },
-  "scripts": {
-    "build": "vue-cli-service build",
-    "deploy": "gh-pages -d dist"
-  }
+  "description": "Vue.js front-end project (static files hosted on GitHub Pages)",
+  "main": "index.html",
+  "scripts": {},
+  "author": "Il tuo nome",
+  "license": "ISC"
 }
