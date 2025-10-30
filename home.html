@@ -78,33 +78,48 @@
           </div>
         </details>
       </section>
+    
 
       <!-- Filter Section -->
       <section class="sorting-panel">
-        <h3>Sort Lessons</h3>
-        <div class="filter-row">
-          <!-- sorting options-->
+  <h3>Sort Lessons</h3>
 
-          <strong>Sort by:</strong>
-          <label><input type="radio" v-model="sortBy" value="subject"> Subject</label>
-          <label><input type="radio" v-model="sortBy" value="location"> Location</label>
-          <label><input type="radio" v-model="sortBy" value="price"> Price</label>
-          <label><input type="radio" v-model="sortBy" value="availableInventory"> Spaces</label>
-        </div>
-        <div class="filter-row">
-          <!-- sorign criteria-->
-          <strong> Order:</strong>
-          <label><input type="radio" v-model="sortOrder" value="ascending"> ascending</label>
-          <label><input type="radio" v-model="sortOrder" value="descending"> descending</label>
-        </div>
-        
-      <div class="filter-row">
-            <!-- show/hide products-->
-            <label>
-              <input type="checkbox" v-model="showProduct" />
-              Show Lessons
-            </label>
-      </section>
+  <!-- Row 1: Sort by -->
+  <div class="filter-row">
+    <strong class="row-label">Sort by:</strong>
+    <div class="options">
+      <label><input type="radio" v-model="sortBy" value="subject"> Subject</label>
+      <label><input type="radio" v-model="sortBy" value="location"> Location</label>
+      <label><input type="radio" v-model="sortBy" value="price"> Price</label>
+      <label><input type="radio" v-model="sortBy" value="availableInventory"> Spaces</label>
+    </div>
+  </div>
+
+  <!-- Row 2: Order -->
+  <div class="filter-row">
+    <strong class="row-label">Order:</strong>
+    <div class="options">
+      <label><input type="radio" v-model="sortOrder" value="ascending"> ascending</label>
+      <label><input type="radio" v-model="sortOrder" value="descending"> descending</label>
+    </div>
+  </div>
+
+  <!-- Row 3: Search + toggle -->
+  <div class="filter-row">
+    <input
+      class="search-input"
+      type="search"
+      v-model="query"
+      placeholder="Search Lessons"
+      aria-label="Search lessons"
+    />
+    <label class="toggle">
+      <input type="checkbox" v-model="showProduct" />
+      Show Lessons
+    </label>
+  </div>
+</section>
+
     
 
       <main>
@@ -138,7 +153,12 @@
               </span>
               <span v-else>Buy now!</span>
             </p>
-
+            <!-- Quantity controls -->
+          <div class="qty-controls">
+            <button @click="decrement(product)" :disabled="cartCount(product.id) === 0">−</button>
+              <span class="qty">{{ cartCount(product.id) }}</span>
+            <button @click="increment(product)" :disabled="!canAddToCart(product)">+</button>
+          </div>
             <!-- Add to cart button -->
             <button @click="addToCart(product)" v-if="canAddToCart(product)">Add to cart</button>
             <button disabled v-else>Add to cart</button>
@@ -151,16 +171,25 @@
         <div v-else> <!-- if not true -->
         <h2>Shopping cart</h2>
 
-        <div v-if="cart.length> 0">
-          <div v-for="(item,index) in cart" :key="'cart-' + index" class="product-card">
-            <h3>{{item.subject}}</h3>
-            <p><strong>Location:</strong> {{item.location}}</p>
-            <p><strong>Price:</strong> {{item.price.toFixed(2)}}</p>
+      <div v-if="cart.length > 0">
+      <div v-for="item in cartGrouped" :key="'cart-group-' + item.id" class="product-card">
+          <h3>{{ item.subject }}</h3>
+        <p><strong>Location:</strong> {{ item.location }}</p>
+        <p><strong>Price:</strong> {{ item.price.toFixed(2) }}</p>
 
-            <button @click="removeFromCart(index)" style="background: red;">
-              Remove From cart
-            </button>
-            </div>
+      <div class="qty-controls">
+          <button @click="decrementById(item.id)" :disabled="item.qty === 0">−</button>
+            <span class="qty">{{ item.qty }}</span>
+          <button @click="incrementById(item.id)" :disabled="!canAddToCart(item)">+</button>
+      </div>
+
+        <button @click="removeAllOfId(item.id)" style="background:red;">
+          Remove From cart
+        </button>
+      </div>
+
+
+
             <h3> Cart Summary</h3>
             <p><strong>Courses:</strong></p>
               <ul>
