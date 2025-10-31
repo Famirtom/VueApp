@@ -4,6 +4,9 @@
   "description": "Vue.js front-end project (static files hosted on GitHub Pages)",
   "main": "index.html",
   "scripts": {},
-  "author": "Il tuo nome",
-  "license": "ISC"
+  "author": "Tommaso",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
 }
