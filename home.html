@@ -182,7 +182,7 @@
             <span class="qty">{{ item.qty }}</span>
           <button @click="incrementById(item.id)" :disabled="!canAddToCart(item)">+</button>
       </div>
-
+      <!--IncrementById in VUe--> 
         <button @click="removeAllOfId(item.id)" style="background:red;">
           Remove From cart
         </button>
