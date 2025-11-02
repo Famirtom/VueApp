@@ -86,22 +86,22 @@
 
   <!-- Row 1: Sort by -->
   <div class="filter-row">
-    <strong class="row-label">Sort by:</strong>
-    <div class="options">
-      <label><input type="radio" v-model="sortBy" value="subject"> Subject</label>
-      <label><input type="radio" v-model="sortBy" value="location"> Location</label>
-      <label><input type="radio" v-model="sortBy" value="price"> Price</label>
-      <label><input type="radio" v-model="sortBy" value="availableInventory"> Spaces</label>
-    </div>
+    <strong class="row-label" for="sortBy">Sort by:</strong>
+    <select id="sortBy" v-model="sortBy" class="select">
+      <option v-for="opt in sortByOptions" :key="opt.value" :value="opt.value">
+        {{ opt.label }}
+      </option>
+    </select>
   </div>
 
   <!-- Row 2: Order -->
   <div class="filter-row">
-    <strong class="row-label">Order:</strong>
-    <div class="options">
-      <label><input type="radio" v-model="sortOrder" value="ascending"> ascending</label>
-      <label><input type="radio" v-model="sortOrder" value="descending"> descending</label>
-    </div>
+     <label class="row-label" for="sortOrder">Order:</label>
+    <select id="sortOrder" v-model="sortOrder" class="select">
+      <option v-for="opt in sortOrderOptions" :key="opt.value" :value="opt.value">
+        {{ opt.label }}
+      </option>
+    </select>
   </div>
 
   <!-- Row 3: Search + toggle -->

@@ -9,7 +9,16 @@ var webstore = new Vue({
   sortBy: 'subject',
   sortOrder: 'ascending', //ascending order
   query: '',
-  
+  sortByOptions: [
+    { value: 'subject',            label: 'Subject' },
+    { value: 'location',           label: 'Location' },
+    { value: 'price',              label: 'Price' },
+    { value: 'availableInventory', label: 'Spaces' }
+  ],
+  sortOrderOptions: [
+    { value: 'ascending',  label: 'Ascending' },
+    { value: 'descending', label: 'Descending' }
+  ],
   order: {
     firstName: '',
     lastName: '',
@@ -98,60 +107,63 @@ var webstore = new Vue({
 },
 
   computed: {
-    cartItemCount() {
-      return this.cart.length || '';
-    },
-    sortedProducts() {
-      if(!this.showProduct) return[];
-      
-      const q = this.query.trim().toLowerCase(); //define q
+  // Total items in cart (already correct)
+  cartItemCount() {
+    return this.cart.length || '';
+  },
 
-      // query filter
-      const filtered = this.products.filter(p =>{
-        if(!q) return true;
-        const subj =String(p.subject || '').toLowerCase();
-        const loc =String(p.location || '').toLowerCase();
-        return subj.includes(q) || loc.includes(q);
-      });
-      // Order Sortby/sortOrder
-      const sorted =filtered.slice().sort((a,b) => {
-      //  Sort by subject, location, price or availability
-        let aVal, bVal;
-        // case of sorting 
-        switch(this.sortBy) {
-          case 'subject':
-            aVal = a.subject.toLowerCase();
-            bVal = b.subject.toLowerCase();
-            break;
-          case 'location':
-            aVal = a.location.toLowerCase();
-            bVal = b.location.toLowerCase();
-            break;
-          case 'price':
-            aVal = a.price;
-            bVal = b.price;
-            break;
-          case 'availableInventory':
-            aVal = a.availableInventory;
-            bVal = b.availableInventory;
-            break;
-          default:
-            return 0;
-        }
-        if (this.sortOrder === 'ascending') {
-          if (aVal < bVal) return -1;
-          if (aVal > bVal) return 1;
+  //  Direction helper (Vue-style for ascending/descending)
+  sortDirection() {
+    // Vue will automatically re-run sorting when this changes
+    return this.sortOrder === "ascending" ? 1 : -1;
+  },
+
+  //  Sorted + filtered products
+  sortedProducts() {
+    if (!this.showProduct) return [];
+
+    // search text
+    const q = this.query.trim().toLowerCase();
+
+    // filter products by subject or location
+    const filtered = this.products.filter(p => {
+      if (!q) return true;
+      const subj = String(p.subject || '').toLowerCase();
+      const loc  = String(p.location || '').toLowerCase();
+      return subj.includes(q) || loc.includes(q);
+    });
+
+    // sort based on current sortBy and sortDirection
+    return filtered.slice().sort((a, b) => {
+      let aVal, bVal;
+      switch (this.sortBy) {
+        case 'subject':
+          aVal = a.subject.toLowerCase();
+          bVal = b.subject.toLowerCase();
+          break;
+        case 'location':
+          aVal = a.location.toLowerCase();
+          bVal = b.location.toLowerCase();
+          break;
+        case 'price':
+          aVal = a.price;
+          bVal = b.price;
+          break;
+        case 'availableInventory':
+          aVal = a.availableInventory;
+          bVal = b.availableInventory;
+          break;
+        default:
           return 0;
-        } else {
-          if (aVal > bVal) return -1;
-          if (aVal < bVal) return 1;
-          return 0;
-        }
-      });
-      
-      return sorted;
-    },
-    cartGrouped() {
+      }
+
+      // compare and multiply by direction (ascending/descending)
+      return (aVal > bVal ? 1 : aVal < bVal ? -1 : 0) * this.sortDirection;
+    });
+  },
+
+  //  Group items in the cart
+  cartGrouped() {
     const map = new Map();
     this.cart.forEach(item => {
       if (!map.has(item.id)) {
@@ -159,10 +171,12 @@ var webstore = new Vue({
       }
       map.get(item.id).qty += 1;
     });
-    return Array.from(map.values()); // [{id, subject, price, location, qty}, ...]
+    return Array.from(map.values());
   },
-    cartTotal(){
-      return this.cart.reduce((total, item) => total + item.price, 0);
-    }
+
+  //  Calculate total cost
+  cartTotal() {
+    return this.cart.reduce((total, item) => total + item.price, 0);
   }
+}
 });
