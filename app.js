@@ -9,7 +9,7 @@ var webstore = new Vue({
   sortBy: 'subject',
   sortOrder: 'ascending', //ascending order
   query: '',
-  sortByOptions: [
+  sortByOptions: [ // sorting options
     { value: 'subject',            label: 'Subject' },
     { value: 'location',           label: 'Location' },
     { value: 'price',              label: 'Price' },
@@ -38,9 +38,8 @@ var webstore = new Vue({
       });
     },
     increment(product){
-      if(this.addToCart(product)){
+      if(this.addToCart(product))
         this.addToCart(product)
-      }
     },
     decrement(product) {
       const idx = this.cart.findIndex(i => i.id === product.id);
