@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Page</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
+  <!-- Link to css file--> 
+  <link rel="stylesheet" href="style.css"> 
+</head>
+<body>
+
+  <!-- Logo  -->
+  <div id="app" class="login-page">
+    <img src="Images/logo.png" alt="Lust zu studieren Logo">
+    <form @submit.prevent="onSubmit">
+        <label for="username">Username:</label>
+        <input type="text" id="username" v-model="username" required placeholder="Enter your user name">
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" v-model="password" required placeholder="Enter password">
+        
+        <button type="submit">Login</button>
+        
+        <p v-if="errorMessage" class="error" style="color:red">{{ errorMessage }} </p>
+    </form>
+  </div>
+  
+    <script>
+  new Vue({
+    el: '#app',
+    data: {
+      username: '',
+      password: '',
+      errorMessage: ''
+    },
+    methods: {
+      onSubmit() {
+        if (this.username === 'Tom' && this.password === '123') {
+          this.errorMessage = '';
+          alert('Login successful!');
+          window.location.href = 'home.html';
+        } else {
+          this.errorMessage = 'Invalid username or password.';
+        }
+      }
+    }
+  });
+</script>
+
+<footer class="footer">
+        <p>© 2024 Lust zu studieren. All rights reserved.</p>
+        <p>Your trusted platform for quality lessons.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" /> <!-- rsponsive design-->
+  <title>Lust zu studieren</title>
+
+  <!-- Font Awesome for cart icon load the font library -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+  />
+
+  <link rel="stylesheet" href="style.css" />
+
+  
+  <!-- Vue.js -->
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
+</head>
+
+<body>
+  <div id="app" >
+    <div class="head">
+    <header>
+      <img src="Images/logo.png">
+      <h1>{{ sitename }}</h1> <!-- interpolation print sitename form app.js -->
+      
+      <!-- checkout button , disable when the cart is empty-->
+      <button @click="showCheckout" :disabled="cart.length === 0"> 
+        {{ cartItemCount }} <!-- Computed -->
+        <!-- class fas fa-cart-plus icon from Font Awesome -->
+        <span class="fas fa-cart-plus"></span> Checkout
+      </button>
+    </header>
+    </div>
+    
+    <section class="filter-panel">
+        <!-- Mini book 1-->
+
+        <details class="mini-book">
+          <summary>
+            <span class="tag">Intro</span> 
+            Welcome to Lust zu studieren
+            <span class="chev"></span>
+          </summary>
+          <div class="page">
+            <p>
+              A small company that offers courses and programs for students of all ages.
+            </p>
+          </div>
+        </details>
+
+        <!-- Mini book 2-->
+         <details class="mini-book">
+          <summary>
+            <span class="tag">About Us</span> 
+            Who are we
+            <span class="chev"></span>
+          </summary>
+          <div class="page">
+            <p>
+              Born as a small experiment, the team has grown with curious people and passionate about design and the web.
+            </p>
+          </div>
+        </details>
+
+        <!-- Mini book 3-->
+         <details class="mini-book">
+          <summary>
+            <span class="tag">Services</span> 
+            What we offer
+            <span class="chev"></span>
+          </summary>
+          <div class="page">
+            <p>
+              UI/UX, front-end development, lightweight branding, and micro-interactions as elegant as these mini-books.
+            </p>
+          </div>
+        </details>
+      </section>
+    
+
+      <!-- Filter Section -->
+      <section class="sorting-panel">
+  <h3>Sort Lessons</h3>
+
+  <!-- Row 1: Sort by -->
+  <div class="filter-row">
+    <strong class="row-label">Sort by:</strong>
+    <div class="options">
+      <label><input type="radio" v-model="sortBy" value="subject"> Subject</label>
+      <label><input type="radio" v-model="sortBy" value="location"> Location</label>
+      <label><input type="radio" v-model="sortBy" value="price"> Price</label>
+      <label><input type="radio" v-model="sortBy" value="availableInventory"> Spaces</label>
+    </div>
+  </div>
+
+  <!-- Row 2: Order -->
+  <div class="filter-row">
+    <strong class="row-label">Order:</strong>
+    <div class="options">
+      <label><input type="radio" v-model="sortOrder" value="ascending"> ascending</label>
+      <label><input type="radio" v-model="sortOrder" value="descending"> descending</label>
+    </div>
+  </div>
+
+  <!-- Row 3: Search + toggle -->
+  <div class="filter-row">
+    <input
+      class="search-input"
+      type="search"
+      v-model="query"
+      placeholder="Search Lessons"
+      aria-label="Search lessons"
+    />
+    <label class="toggle">
+      <input type="checkbox" v-model="showProduct" />
+      Show Lessons
+    </label>
+  </div>
+</section>
+
+    
+
+      <main>
+        <div v-if="showProduct"> <!-- is true show the product-->
+        <div class="products-grid">
+          <div v-for="product in sortedProducts" :key="product.id" class="product-card">
+            <img :src="product.image" 
+            :alt="product.subject" 
+            class="product-img" 
+            :style="{ objectPosition: product.focal || 'center' }"/>
+
+          <details>
+            <summary><span class="chev"></span>{{product.subject}}</summary>
+
+            <p v-html="product.description"></p>
+            <p><strong>Price:</strong> ${{ product.price.toFixed(2) }}</p>
+            <p><strong>Location:</strong> {{ product.location }}</p>
+            <p><strong>Duration:</strong> {{ product.duration }}</p>
+          
+            <!-- Rating -->
+            <div class="rating">
+              <span v-for="n in product.rating">★</span>
+              <span v-for="n in 5 - product.rating">☆</span>
+            </div>
+
+            <!-- Inventory message -->
+            <p class="stock">
+              <span v-if="product.availableInventory === cartCount(product.id)">All out!</span>
+              <span v-else-if="product.availableInventory - cartCount(product.id) < 5">
+                  Only {{ product.availableInventory - cartCount(product.id) }} left!
+              </span>
+              <span v-else>Buy now!</span>
+            </p>
+            <!-- Quantity controls -->
+          <div class="qty-controls">
+            <button @click="decrement(product)" :disabled="cartCount(product.id) === 0">−</button>
+              <span class="qty">{{ cartCount(product.id) }}</span>
+            <button @click="increment(product)" :disabled="!canAddToCart(product)">+</button>
+          </div>
+            <!-- Add to cart button -->
+            <button @click="addToCart(product)" v-if="canAddToCart(product)">Add to cart</button>
+            <button disabled v-else>Add to cart</button>
+          </details>
+          </div>
+        </div>
+        </div>
+
+        <!-- Checkout Page -->
+        <div v-else> <!-- if not true -->
+        <h2>Shopping cart</h2>
+
+      <div v-if="cart.length > 0">
+      <div v-for="item in cartGrouped" :key="'cart-group-' + item.id" class="product-card">
+          <h3>{{ item.subject }}</h3>
+        <p><strong>Location:</strong> {{ item.location }}</p>
+        <p><strong>Price:</strong> {{ item.price.toFixed(2) }}</p>
+
+      <div class="qty-controls">
+          <button @click="decrementById(item.id)" :disabled="item.qty === 0">−</button>
+            <span class="qty">{{ item.qty }}</span>
+          <button @click="incrementById(item.id)" :disabled="!canAddToCart(item)">+</button>
+      </div>
+
+        <button @click="removeAllOfId(item.id)" style="background:red;">
+          Remove From cart
+        </button>
+      </div>
+
+
+
+            <h3> Cart Summary</h3>
+            <p><strong>Courses:</strong></p>
+              <ul>
+                <li v-for="(item, index) in cart" :key="'summary-' +index">
+                  {{ item.subject}}
+                </li>
+              </ul>
+            <div>
+            <h3>Total: £{{cartTotal.toFixed(2)}}</h3>
+            <p>Items in cart: {{cart.length}}</p>
+            </div>
+          </div>
+
+          <div v-else>
+            <p> Your cart is empty. Add some lessons!</p>
+          </div>
+
+        <h2>Checkout</h2>
+        <!-- USER DETAILS -->
+        <p>
+          <strong>First Name:</strong>
+          <input 
+          v-model.trim="order.firstName" 
+          placeholder="Enter first name (Letters Only)" />
+  
+          <span v-if="order.firstName && !isValidName()" style="color: red;">
+            Name must contain letters only
+          </span>
+          </p>
+
+        <p>
+          <strong>Last Name:</strong>
+          <input 
+          v-model.trim="order.lastName" 
+          placeholder="Enter last name (Letters only)" />
+
+          <span v-if="order.lastName && !isValidLastName()" style="color: red;">
+            Last name must contain letters only
+          </span>
+        </p> <p>
+            <strong>Phone:</strong>
+            <input 
+              v-model.trim="order.phone" 
+              placeholder="Enter your phone number (numbers only)" 
+            />
+            <span v-if="order.phone && !isValidPhone()" style="color: red; font-size: 0.9em; display: block; margin-top: 5px;">
+             Phone must contain numbers only
+            </span>
+          </p>
+        <!-- SUBMIT -->
+        <button @click="submitForm" :disabled="!canCheckout() || cart.length === 0">
+          Place Order
+        </button>
+
+        <p v-if="!canCheckout() && (order.firstName || order.lastName || order.phone)" Style="color: blue;">
+          Please Provide valid Information
+        </p>
+        <!-- Display order summary dynamically -->
+        <h2>Order Information</h2>
+        <p>First Name: {{ order.firstName }}</p>
+        <p>Last Name: {{ order.lastName }}</p>
+        <p>Phone number: {{ order.phone}}</p>
+      </div>
+    </main>
+  </div>
+  <!-- Scripts -->
+  <script src="products.js"></script>
+  <script src="app.js"></script>
+  
+
+ <!-- My site's footer -->
+<footer class="footer">
+        <p>© 2024 Lust zu studieren. All rights reserved.</p>
+        <p>Your trusted platform for quality lessons.</p>
+      
+  </footer>
+</body>
+</html>
