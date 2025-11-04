@@ -1,4 +1,4 @@
-let products = [
+window.lessons = [
     { 
         id: 1001, 
         subject: "Java Programming", 

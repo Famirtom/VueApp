@@ -135,14 +135,14 @@
             <summary><span class="chev"></span>{{product.subject}}</summary>
 
             <p v-html="product.description"></p>
-            <p><strong>Price:</strong> ${{ product.price.toFixed(2) }}</p>
+            <p><strong>Price:</strong> £{{ product.price.toFixed(2) }}</p>
             <p><strong>Location:</strong> {{ product.location }}</p>
             <p><strong>Duration:</strong> {{ product.duration }}</p>
           
             <!-- Rating -->
-            <div class="rating">
-              <span v-for="n in product.rating">★</span>
-              <span v-for="n in 5 - product.rating">☆</span>
+           <div class="rating">
+              <span v-for="n in fullStars(product.rating)" :key="'f'+product.id+'-'+n">★</span>
+              <span v-for="n in emptyStars(product.rating)" :key="'e'+product.id+'-'+n">☆</span>
             </div>
 
             <!-- Inventory message -->
@@ -192,11 +192,11 @@
 
             <h3> Cart Summary</h3>
             <p><strong>Courses:</strong></p>
-              <ul>
-                <li v-for="(item, index) in cart" :key="'summary-' +index">
-                  {{ item.subject}}
-                </li>
-              </ul>
+            <ul>
+              <li v-for="(item, index) in cartGrouped" :key="'summary-' + index">
+                {{ item.subject }} × {{ item.qty }}
+              </li>
+            </ul>
             <div>
             <h3>Total: £{{cartTotal.toFixed(2)}}</h3>
             <p>Items in cart: {{cart.length}}</p>
@@ -256,7 +256,7 @@
     </main>
   </div>
   <!-- Scripts -->
-  <script src="products.js"></script>
+  <script src="lessons.js"></script>
   <script src="app.js"></script>
   
 
