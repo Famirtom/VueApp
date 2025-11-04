@@ -3,6 +3,9 @@
 Live demo: https://famirtom.github.io/VueApp/
 Repository: https://github.com/Famirtom/VueApp
 
+### 🔗 Connected API (Render)
+https://vueapp-backend.onrender.com/api/lessons
+
 This is the Front-end of a fictitious web app where students/parents can browse and but after-school classes.
 
 ## Tech
