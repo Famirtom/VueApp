@@ -7,7 +7,7 @@ var webstore = new Vue({
   cart: [],
   // sort options
   sortBy: 'subject',
-  apiBase: 'http://localhost:3000',  // change to your Render URL later
+  apiBase: 'https://vueapp-backend.onrender.com',  // change to your Render URL later
   sortOrder: 'ascending', //ascending order
   query: '',
   sortByOptions: [ // sorting options
