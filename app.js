@@ -1,35 +1,37 @@
 var webstore = new Vue({
   el: '#app',
   data: {
-  sitename: 'Lust zu studieren ' ,
-  showProduct: true,
-  products: [],
-  cart: [],
-  // sort options
-  sortBy: 'subject',
-  apiBase: 'https://vueapp-backend.onrender.com',  // change to your Render URL later
-  sortOrder: 'ascending', //ascending order
-  query: '',
-  sortByOptions: [ // sorting options
-    { value: 'subject',            label: 'Subject' },
-    { value: 'location',           label: 'Location' },
-    { value: 'price',              label: 'Price' },
-    { value: 'availableInventory', label: 'Spaces' }
-  ],
-  sortOrderOptions: [
-    { value: 'ascending',  label: 'Ascending' },
-    { value: 'descending', label: 'Descending' }
-  ],
-  order: {
-    firstName: '',
-    lastName: '',
-    phone: ''
-  },
+    sitename: 'Lust zu studieren ' ,
+    showProduct: true,
+    products: [],
+    cart: [],
+    // sort options
+    sortBy: 'subject',
+    apiBase: 'https://vueapp-backend.onrender.com',  // change to your Render URL later
+    sortOrder: 'ascending', //ascending order
+    query: '',
+    sortByOptions: [ // sorting options
+      { value: 'subject',            label: 'Subject' },
+      { value: 'location',           label: 'Location' },
+      { value: 'price',              label: 'Price' },
+      { value: 'availableInventory', label: 'Spaces' }
+    ],
+    sortOrderOptions: [
+      { value: 'ascending',  label: 'Ascending' },
+      { value: 'descending', label: 'Descending' }
+    ],
+    order: {
+      firstName: '',
+      lastName: '',
+      phone: ''
+    },
 },
-mounted() {
-  fetch(`${this.apiBase}/api/lessons`)
+
+// Fetch products from API on mount
+mounted() { 
+  fetch(`${this.apiBase}/api/lessons`) // fetch lessons from API
     .then(r => {
-      if (!r.ok) throw new Error('Failed to load lessons');
+      if (!r.ok) throw new Error('Failed to load lessons'); // check for response ok
       return r.json();
     })
     .then(list => {
@@ -37,13 +39,14 @@ mounted() {
       this.products = list.map(doc => ({
         id: doc.id != null ? doc.id : doc._id,   // use numeric id if present, else _id
         _id: doc._id,                             // keep _id for later PUT
-        subject: doc.subject,
-        location: doc.location,
-        price: Number(doc.price),
+        subject: doc.subject, // assume subject is provided
+        location: doc.location, // assume location is provided
+        price: Number(doc.price), // ensure price is a number
         availableInventory: Number(doc.availableInventory),
-        rating: Number(doc.rating || 0),   // <— default to 0 if missing
-        image: doc.image, 
-        // image is optional and comes from frontend; we don’t use it from API
+        rating: Number(doc.rating || 0),   // default to 0 if missing
+        image: doc.image,  // assume image URL is provided
+        description: doc.description, // assume description is provided
+        duration: doc.duration // assume duration is provided
       }));
     })
     .catch(err => {
@@ -154,12 +157,12 @@ async submitForm() {
         console.log(` Updating ${product.subject}: ${product.availableInventory} -> ${newInventory}`);
 
         // Send PUT request to update inventory
-        const putRes = await fetch(`${this.apiBase}/api/lessons/${product._id}`, {
-          method: 'PUT',
+        const putRes = await fetch(`${this.apiBase}/api/lessons/${product._id}`, { // use _id for PUT
+          method: 'PUT', // use PUT method
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ availableInventory: newInventory })
+          body: JSON.stringify({ availableInventory: newInventory }) // only send updated inventory
         });
-
+        // Check for errors
         if (!putRes.ok) {
           console.error(` Failed to update inventory for ${product.subject}`);
           continue;
@@ -174,7 +177,7 @@ async submitForm() {
     // Show success message
     alert(`Order confirmed! ID: ${saved._id || saved.id}\n\nInventory has been updated.`);
 
-    // ===== STEP 3: Reset UI =====
+    //  Reset UI state
     this.cart = [];
     this.showProduct = true;
     this.order.firstName = '';
@@ -215,14 +218,14 @@ async submitForm() {
 },
 
   computed: {
-  // Total items in cart (already correct)
+  // Total items in cart 
   cartItemCount() {
     return this.cart.length || '';
   },
 
-  //  Direction helper (Vue-style for ascending/descending)
+  // Sort direction multiplier
   sortDirection() {
-    // Vue will automatically re-run sorting when this changes
+    // return 1 for ascending, -1 for descending
     return this.sortOrder === "ascending" ? 1 : -1;
   },
 

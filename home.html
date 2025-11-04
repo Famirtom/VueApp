@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" /> <!-- rsponsive design-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" /> <!-- responsive design-->
   <title>Lust zu studieren</title>
 
   <!-- Font Awesome for cart icon load the font library -->
@@ -123,7 +123,8 @@
     
 
       <main>
-        <div v-if="showProduct"> <!-- is true show the product-->
+        
+        <div v-if="showProduct"> <!-- if true show the product-->
         <div class="products-grid">
           <div v-for="product in sortedProducts" :key="product.id" class="product-card">
             <img :src="product.image" 
@@ -134,10 +135,11 @@
           <details>
             <summary><span class="chev"></span>{{product.subject}}</summary>
 
-            <p v-html="product.description"></p>
+            <p>{{ product.description }}</p>
             <p><strong>Price:</strong> £{{ product.price.toFixed(2) }}</p>
             <p><strong>Location:</strong> {{ product.location }}</p>
             <p><strong>Duration:</strong> {{ product.duration }}</p>
+
           
             <!-- Rating -->
            <div class="rating">
@@ -262,7 +264,7 @@
 
  <!-- My site's footer -->
 <footer class="footer">
-        <p>© 2024 Lust zu studieren. All rights reserved.</p>
+        <p>© 2025 Lust zu studieren. All rights reserved.</p>
         <p>Your trusted platform for quality lessons.</p>
       
   </footer>
