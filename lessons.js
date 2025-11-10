@@ -5,7 +5,7 @@ window.lessons = [
         description: "Complete Java course covering basics to advanced topics including OOP, data structures, and frameworks", 
         price: 300, 
         image: "Images/Java.png", 
-        availableInventory: 5,
+        availableInventory: 10,
         rating: 4,
         location: "London",
         duration: "12 weeks"
@@ -16,7 +16,7 @@ window.lessons = [
         description: "Comprehensive business course covering management, finance, marketing and entrepreneurship", 
         price: 150, 
         image: "Images/business.png", 
-        availableInventory: 5,
+        availableInventory: 10,
         rating: 4,
         location: "Manchester",
         duration: "8 weeks"
@@ -27,7 +27,7 @@ window.lessons = [
         description: "Essential nursing course covering patient care, medical procedures and healthcare ethics",
         price: 179.99, 
         image: "Images/nurse.png",
-        availableInventory: 5,
+        availableInventory: 10,
         rating: 3,
         location: "Birmingham",
         duration: "10 weeks"
@@ -38,7 +38,7 @@ window.lessons = [
         description: "Full-stack web development course with HTML, CSS, JavaScript, Vue.js and Node.js",
         price: 249.99, 
         image: "Images/web.png",
-        availableInventory: 5,
+        availableInventory: 10,
         rating: 4,
         location: "London",
         duration: "14 weeks"
@@ -49,7 +49,7 @@ window.lessons = [
         description: "Data analysis and machine learning with Python, statistics and data visualization",
         price: 158.99, 
         image: "Images/data.png",
-        availableInventory: 5,
+        availableInventory: 10,
         rating: 4,
         location: "Edinburgh",
         duration: "16 weeks"
@@ -60,7 +60,7 @@ window.lessons = [
         description: "Modern marketing strategies including SEO, social media, content marketing and analytics",
         price: 180, 
         image: "Images/marketing.png",
-        availableInventory: 5,
+        availableInventory: 10,
         rating: 4,
         location: "Leeds",
         duration: "6 weeks"
@@ -71,7 +71,7 @@ window.lessons = [
         description: "Visual design principles with Adobe Creative Suite, branding and UI/UX design",
         price: 220, 
         image: "Images/design.png",
-        availableInventory: 5,
+        availableInventory: 10,
         rating: 5,
         location: "Bristol",
         duration: "10 weeks"
@@ -82,7 +82,7 @@ window.lessons = [
         description: "Network security, ethical hacking, cryptography and security best practices",
         price: 400, 
         image: "Images/security.png",
-        availableInventory: 5,
+        availableInventory: 10,
         rating: 5,
         location: "London",
         duration: "12 weeks"
@@ -93,7 +93,7 @@ window.lessons = [
         description: "Agile and traditional project management methodologies with PMP preparation",
         price: 280, 
         image: "Images/project.png",
-        availableInventory: 5,
+        availableInventory: 10,
         rating: 4,
         location: "Glasgow",
         duration: "8 weeks"
@@ -104,7 +104,7 @@ window.lessons = [
         description: "Build iOS and Android apps with React",
         price: 350,
         image: "Images/mobile.png",
-        availableInventory: 5,
+        availableInventory: 10,
         rating: 5,
         location: "London",
         duration: "12 weeks"
