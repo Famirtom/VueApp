@@ -141,7 +141,7 @@ var webstore = new Vue({
           firstName: this.order.firstName,
           lastName: this.order.lastName,
           phone: this.order.phone,
-          items: this.cartGrouped.map(item => ({
+          items: grouped.map(item => ({
             subject: item.subject,
             qty: item.qty || this.cartCount(item.id),
             price: item.price
