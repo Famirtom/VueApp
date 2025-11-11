@@ -62,6 +62,8 @@ var webstore = new Vue({
 
     addToCart(product) {
       // add entire product object to cart
+      // force shallow copy so reaqctive gets triggered
+      const plain = JSON.parse(JSON.stringify(product));
       this.cart.push({
         id: product.id,
         subject: product.subject,
@@ -69,6 +71,7 @@ var webstore = new Vue({
         price: product.price,
         image: product.image
       });
+      console.log(`Added to cart: ${product.subject}`);
     },
 
     increment(product) {
@@ -135,7 +138,7 @@ var webstore = new Vue({
           firstName: this.order.firstName,
           lastName: this.order.lastName,
           phone: this.order.phone,
-          items: this.cart.map(item => ({
+          items: this.cartGrouped.map(item => ({
             subject: item.subject,
             qty: item.qty,
             price: item.price
