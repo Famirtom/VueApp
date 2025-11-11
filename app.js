@@ -134,6 +134,9 @@ var webstore = new Vue({
       if (!this.canCheckout() || this.cart.length === 0) return;
 
       try {
+        // force reactivity
+        const grouped = JSON.parse(JSON.stringify(this.cartGrouped));
+        // prepare payload
         const payload = {
           firstName: this.order.firstName,
           lastName: this.order.lastName,
