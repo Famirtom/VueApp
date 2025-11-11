@@ -2,14 +2,15 @@
   
 Live demo: https://famirtom.github.io/VueApp/
 Repository: https://github.com/Famirtom/VueApp
+Back-end: https://github.com/Famirtom/VueApp-Backend
 
 ###  Connected API (Render)
 https://vueapp-backend.onrender.com/api/lessons
 
-This is the Front-end of a fictitious web app where students/parents can browse and but after-school classes.
+This is the Front-end of a fictitious web app where students/parents can browse and buy after-school classes.
 
 ## Tech
-**Vue.js 2** (CDN) for rendering and interactivity
+**Vue.js 2**  for rendering and interactivity
 **Vanilla JS** (no libraries that replicate Vue feature)
 **Font Awesome** for icons
 **Plain CSS** (no CSS framework)
@@ -33,7 +34,7 @@ app.js - VUe app logic (sorting, cart, checkout)
 style.css - styles
 
 ## Diplay lessons (Front-end)
-- At least **10 lessons** , each with **5 spaces**
+- At least **10 lessons** , each with **10 spaces**
 - Each lesson shows **Subject**, **Location**, **Price**, **Space left**, and an **image**
 - Rendering with **v-for**
   source: 'product.js' and the template in 'home.html'.
