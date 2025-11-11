@@ -161,7 +161,7 @@ var webstore = new Vue({
         console.log('✅ Order created:', saved._id || saved.id);
 
         for (const item of this.cartGrouped) {
-          const product = this.products.find(p => p.id === item.id);
+          const product = this.products.find(p => p.id == item.id || p._id == item.id);
 
           if (product && product._id) {
             const newInventory = product.availableInventory - item.qty;
