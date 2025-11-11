@@ -140,7 +140,7 @@ var webstore = new Vue({
           phone: this.order.phone,
           items: this.cartGrouped.map(item => ({
             subject: item.subject,
-            qty: item.qty,
+            qty: item.qty || this.cartCount(item.id),
             price: item.price
           })),
           total: this.cartTotal
