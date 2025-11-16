@@ -33,6 +33,7 @@ var webstore = new Vue({
   },
 
   methods: {
+    // load all the lessons from the API
     async fetchLessons() {
       try {
         const res = await fetch(`${this.apiBase}/api/lessons`);
@@ -57,6 +58,37 @@ var webstore = new Vue({
       } catch (err) {
         console.error('Failed to reload lessons:', err);
         if (Array.isArray(window.lessons)) this.products = window.lessons; // fallback for local dev
+      }
+    },
+    // reserach in the backend
+    async searchLessons() {
+      const q = this.query.trim();
+      if(!q) {
+        //if is empty, fetch all lessons
+        await this.fetchLessons();
+        return;
+      }
+      try {
+        const res = await fetch(`${this.apiBase}/api/lessons/search?q=${encodeURIComponent(q)}`);
+        if (!res.ok) throw new Error('Search failed');
+        const results = await res.json();
+
+        //update products with search results
+        this.products = results.map(doc => ({
+          id: doc.id != null ? doc.id : doc._id,
+          _id: doc._id,
+        subject: doc.subject,
+        location: doc.location,
+        price: Number(doc.price),
+        availableInventory: Number(doc.availableInventory),
+        rating: Number(doc.rating || 0),
+        image: doc.image,
+        description: doc.description,
+        duration: doc.duration
+        }));
+        console.log(`found ${results.length} results for "${q}"`);
+      } catch (err) {
+        console.error('Search error:', err);
       }
     },
 
