@@ -1,4 +1,16 @@
-/* Global styles */
+/* 
+Style.css Global styling for Vueapp
+This file defines the layout and design of the web app
+it style:
+- the body and header
+- the book components 
+- the sorting and filtering panel
+- the main content area
+- the form elements
+- the product cards and cart items
+- Product grid
+*/
+
 body {
   font-family: 'serif';
   background-image: url('Images/background.png');

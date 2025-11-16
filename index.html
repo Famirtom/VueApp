@@ -9,8 +9,8 @@
   <link rel="stylesheet" href="style.css"> 
 </head>
 <body>
-
-  <!-- Logo  -->
+  <!-- simple login page-->
+  <!-- Redirects to home.html after successful input  -->
   <div id="app" class="login-page">
     <img src="Images/logo.png" alt="Lust zu studieren Logo">
     <form @submit.prevent="onSubmit">
@@ -25,7 +25,7 @@
         <p v-if="errorMessage" class="error" style="color:red">{{ errorMessage }} </p>
     </form>
   </div>
-  
+  <!-- simple inline JS for redirect-->
     <script>
   new Vue({
     // Vue instance

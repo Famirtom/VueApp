@@ -1,39 +1,54 @@
+// app.js - Vue frontend for logic for "Lust zu studieren"
+// this file manages the dynamic behavior of the app using Vue.js
+// it handle:
+// fetching lessons form the backend (Render API)
+// searching lessons
+// adding/removing items to/from cart
+// checkout process and order submission
+
 var webstore = new Vue({
-  el: '#app',
+  el: '#app', // Vue instance boud to the HTML element with id="app"
+  
+  // Data Properties
+
   data: {
-    sitename: 'Lust zu studieren ',
-    showProduct: true,
-    products: [],
-    cart: [],
-    // sort options
-    sortBy: 'subject',
+    sitename: 'Lust zu studieren ',  // application title
+    showProduct: true, // toggle between product list and checkout view
+    products: [], // list of lessons fetched from the backend
+    cart: [], // shopping cart items
+    sortBy: 'subject', // default sort by subject
     apiBase: 'https://vueapp-backend.onrender.com',  // change to your Render URL later
     sortOrder: 'ascending', //ascending order
-    query: '',
-    sortByOptions: [ // sorting options
+    query: '',  // search query
+    // Soorting options used in dropdown menus
+    sortByOptions: [ 
       { value: 'subject',            label: 'Subject' },
       { value: 'location',           label: 'Location' },
       { value: 'price',              label: 'Price' },
       { value: 'availableInventory', label: 'Spaces' }
     ],
+    // sorting option used in dropdown menus
     sortOrderOptions: [
       { value: 'ascending',  label: 'Ascending' },
       { value: 'descending', label: 'Descending' }
     ],
-    order: {
+    order: { // checkout form data
       firstName: '',
       lastName: '',
       phone: ''
     }
   },
 
-  // Fetch products from API on mount
+  // Mouted Lifecycle Hook
+  // fetch lessons when the app is first loaded
   mounted() { 
     this.fetchLessons(); // load lessons from API
   },
 
+  // methods - functions for user interaction and data handling
+
   methods: {
-    // load all the lessons from the API
+    // fetch all lessons from the backend API
     async fetchLessons() {
       try {
         const res = await fetch(`${this.apiBase}/api/lessons`);
@@ -60,7 +75,9 @@ var webstore = new Vue({
         if (Array.isArray(window.lessons)) this.products = window.lessons; // fallback for local dev
       }
     },
-    // reserach in the backend
+
+    // serach - backend-based serach query
+   
     async searchLessons() {
       const q = this.query.trim();
       if(!q) {
@@ -68,6 +85,7 @@ var webstore = new Vue({
         await this.fetchLessons();
         return;
       }
+
       try {
         const res = await fetch(`${this.apiBase}/api/lessons/search?q=${encodeURIComponent(q)}`);
         if (!res.ok) throw new Error('Search failed');
@@ -91,6 +109,8 @@ var webstore = new Vue({
         console.error('Search error:', err);
       }
     },
+
+    // add a lesson to the shopping cart
 
     addToCart(product) {
       // add entire product object to cart
@@ -161,7 +181,7 @@ var webstore = new Vue({
       return this.isValidLastName() && this.isValidName() && this.isValidPhone();
     },
 
-    // Submit form
+    // Submit order (POST request)
     async submitForm() {
       if (!this.canCheckout() || this.cart.length === 0) return;
 
@@ -180,7 +200,8 @@ var webstore = new Vue({
           })),
           total: this.cartTotal
         };
-        // Create order
+
+        // POST order to backend
         const res = await fetch(`${this.apiBase}/api/orders`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -219,9 +240,9 @@ var webstore = new Vue({
           }
         }
 
+        // confimation alert and UI reset
         alert(`Order confirmed! ID: ${saved._id || saved.id}\n\nInventory has been updated.`);
         await this.fetchLessons(); // Refresh lessons
-
         this.cart = [];
         this.showProduct = true;
         this.order.firstName = '';
@@ -263,15 +284,21 @@ var webstore = new Vue({
     }
   },
 
+
+  // computed properties derived data
+
   computed: {
+    // total number of items in the cart
     cartItemCount() {
       return this.cart.length || '';
     },
 
+    // sort direction (ascedning or descending)
     sortDirection() {
       return this.sortOrder === 'ascending' ? 1 : -1;
     },
 
+    // sorted and filtere products (Lessons)
     sortedProducts() {
       if (!this.showProduct) return [];
 
@@ -283,34 +310,22 @@ var webstore = new Vue({
         const loc = String(p.location || '').toLowerCase();
         return subj.includes(q) || loc.includes(q);
       });
-
+      
+      // sort dynamically
       return filtered.slice().sort((a, b) => {
         let aVal, bVal;
         switch (this.sortBy) {
-          case 'subject':
-            aVal = a.subject.toLowerCase();
-            bVal = b.subject.toLowerCase();
-            break;
-          case 'location':
-            aVal = a.location.toLowerCase();
-            bVal = b.location.toLowerCase();
-            break;
-          case 'price':
-            aVal = a.price;
-            bVal = b.price;
-            break;
-          case 'availableInventory':
-            aVal = a.availableInventory;
-            bVal = b.availableInventory;
-            break;
-          default:
-            return 0;
+          case 'subject': aVal = a.subject.toLowerCase(); bVal = b.subject.toLowerCase(); break;
+          case 'location': aVal = a.location.toLowerCase(); bVal = b.location.toLowerCase(); break;
+          case 'price': aVal = a.price; bVal = b.price; break;
+          case 'availableInventory': aVal = a.availableInventory; bVal = b.availableInventory; break;
+          default: return 0;
         }
-
         return (aVal > bVal ? 1 : aVal < bVal ? -1 : 0) * this.sortDirection;
       });
     },
 
+    // group cart items for checkout
     cartGrouped() {
       const map = new Map();
       this.cart.forEach(item => {
@@ -322,6 +337,7 @@ var webstore = new Vue({
       return Array.from(map.values());
     },
 
+    // total price of items in cart
     cartTotal() {
       return this.cart.reduce((total, item) => total + item.price, 0);
     }

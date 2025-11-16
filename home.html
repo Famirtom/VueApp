@@ -10,16 +10,19 @@
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
   />
-
+  <!-- Link to external CSS file -->
   <link rel="stylesheet" href="style.css" />
 
   
-  <!-- Vue.js -->
+  <!-- Import Vue.js from CDN versione 2 -->
   <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
 </head>
 
 <body>
+  <!-- Root element for the vue app -->
+  <!-- the vue instance in app.js is mouted here using el: 'app'-->
   <div id="app" >
+    <!-- navigation header-->
     <div class="head">
     <header>
       <img src="Images/logo.png">
@@ -104,7 +107,8 @@
     </select>
   </div>
 
-  <!-- Row 3: Search + toggle -->
+  <!-- Row 3: Search bar linked to query v-model-->
+  <!-- Trigger backend serach as user types-->
   <div class="filter-row">
     <input
       class="search-input"
@@ -121,12 +125,15 @@
   </div>
 </section>
 
-    
+    <!-- Main content are Displays products or checkout form-->
 
       <main>
         
-        <div v-if="showProduct"> <!-- if true show the product-->
+        <!-- Product list page -->
+        <!-- v-if toggles between products and checkout -->
+        <div v-if="showProduct"> 
         <div class="products-grid">
+          <!-- Sorting options-->
           <div v-for="product in sortedProducts" :key="product.id" class="product-card">
             <img :src="product.image" 
             :alt="product.subject" 
@@ -135,7 +142,7 @@
 
           <details>
             <summary><span class="chev"></span>{{product.subject}}</summary>
-
+            <!-- Product details -->
             <p>{{ product.description }}</p>
             <p><strong>Price:</strong> £{{ product.price.toFixed(2) }}</p>
             <p><strong>Location:</strong> {{ product.location }}</p>
@@ -209,6 +216,8 @@
           <div v-else>
             <p> Your cart is empty. Add some lessons!</p>
           </div>
+
+        <!-- Checkout form -->
 
         <h2>Checkout</h2>
         <!-- USER DETAILS -->
