@@ -9,11 +9,12 @@ https://vueapp-backend.onrender.com/api/lessons
 
 This is the Front-end of a fictitious web app where students/parents can browse and buy after-school classes.
 
-## Tech
-**Vue.js 2**  for rendering and interactivity
-**Vanilla JS** (no libraries that replicate Vue feature)
-**Font Awesome** for icons
-**Plain CSS** (no CSS framework)
+## Technologies Used 
+**Vue.js 2**  - Reactive front-end framework
+**Vanilla JS** - logic
+**HTML5 + CSS3**  - Layout and design
+**Font Awesome** - for icons
+**Fetch API** - For API communication
 
 **How to Run**
 
@@ -33,6 +34,15 @@ pruducts.js - local sample data (10 lessons, 5 spaces each)
 app.js - VUe app logic (sorting, cart, checkout)
 style.css - styles
 
+## Features
+* Display list of lessons using v-for
+* Sorting by subject, location, price and space
+* Real time search with back-end API
+* add to cart and remove
+* checkout with form validation
+* Live inventory updates afted order
+* Responsive layout for all devices
+  
 ## Diplay lessons (Front-end)
 - At least **10 lessons** , each with **10 spaces**
 - Each lesson shows **Subject**, **Location**, **Price**, **Space left**, and an **image**
