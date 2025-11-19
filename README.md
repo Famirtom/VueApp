@@ -1,4 +1,6 @@
 # Vue Front-End App
+
+This is a fictional web application created with the intent to showcase and improve my skills in Full Stack development.
   
 Live demo: https://famirtom.github.io/VueApp/
 Repository: https://github.com/Famirtom/VueApp
