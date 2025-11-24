@@ -214,7 +214,7 @@ var webstore = new Vue({
         }
 
         const saved = await res.json();
-        console.log('✅ Order created:', saved._id || saved.id);
+        console.log('Order created:', saved._id || saved.id);
 
         for (const item of this.cartGrouped) {
           const product = this.products.find(p => p.id == item.id || p._id == item.id);
