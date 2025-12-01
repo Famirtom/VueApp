@@ -15,6 +15,7 @@ var webstore = new Vue({
     sitename: 'Lust zu studieren ',  // application title
     showProduct: true, // toggle between product list and checkout view
     products: [], // list of lessons fetched from the backend
+    loading: true, // show loading message lessons are fetched
     cart: [], // shopping cart items
     sortBy: 'subject', // default sort by subject
     apiBase: 'https://vueapp-backend.onrender.com',  // change to your Render URL later
@@ -71,8 +72,9 @@ var webstore = new Vue({
 
         console.log('Lessons Refreshed');
       } catch (err) {
-        console.error('Failed to reload lessons:', err);
-        if (Array.isArray(window.lessons)) this.products = window.lessons; // fallback for local dev
+        console.error('Backend might be waking up', err);
+      } finally{
+        setTimeout(() => { this.loading = false;}, 1500);
       }
     },
 

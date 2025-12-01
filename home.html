@@ -128,7 +128,9 @@
     <!-- Main content are Displays products or checkout form-->
 
       <main>
-        
+        <div v-if="loading" class="loading-message">
+          Connecting to the server... please wait a few seconds.
+        </div>
         <!-- Product list page -->
         <!-- v-if toggles between products and checkout -->
         <div v-if="showProduct"> 
