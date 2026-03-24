@@ -1,83 +1,42 @@
-# Vue Front-End App
+# Vue Full-Stack Web Application
 
-This is a fictional web application created with the intent to showcase and improve my skills in Full Stack development.
-  
-Live demo: https://famirtom.github.io/VueApp/
-Repository: https://github.com/Famirtom/VueApp
-Back-end: https://github.com/Famirtom/VueApp-Backend
+## Overview
+This project is a full-stack web application built with Vue.js (frontend) and a Node.js/Express backend. It demonstrates client-server communication, API integration, and dynamic data rendering.
 
-###  Connected API (Render)
-https://vueapp-backend.onrender.com/api/lessons
-
-This is the Front-end of a fictitious web app where students/parents can browse and buy after-school classes.
-
-## Technologies Used 
-**Vue.js 2**  - Reactive front-end framework
-**Vanilla JS** - logic
-**HTML5 + CSS3**  - Layout and design
-**Font Awesome** - for icons
-**Fetch API** - For API communication
-
-**How to Run**
-
--Open 'index.html' in a browser.
--Simple login (client-side only):
-  **Username:** 'Tom'
-  **Password:** '123'
--After login you land on 'home.html'.
-
-For GitHub pages the app is served from this repo root, so no build step is required.
-
-## App Structure
-/images/ - Store lesson images + background and logo
-index.html - login page(Vue inline)
-home.html - lessons & cart (Vue app)
-pruducts.js - local sample data (10 lessons, 5 spaces each)
-app.js - VUe app logic (sorting, cart, checkout)
-style.css - styles
+The application allows users to browse lessons, interact with content, and simulate a simple booking/purchasing workflow.
 
 ## Features
-* Display list of lessons using v-for
-* Sorting by subject, location, price and space
-* Real time search with back-end API
-* add to cart and remove
-* checkout with form validation
-* Live inventory updates afted order
-* Responsive layout for all devices
-  
-## Diplay lessons (Front-end)
-- At least **10 lessons** , each with **10 spaces**
-- Each lesson shows **Subject**, **Location**, **Price**, **Space left**, and an **image**
-- Rendering with **v-for**
-  source: 'product.js' and the template in 'home.html'.
+- Dynamic frontend built with Vue.js
+- REST API integration with backend
+- Data fetching and rendering from server
+- Interactive user interface with state management
+- Modular component-based architecture
 
-## Sorting
--Sort by **Subject/ location/ Price / spaces**
--Sort order **Ascending/ Descending**
--Implemented in 'Computed.sortedProducts' in 'app.js'
+## Tech Stack
+- Frontend: Vue.js, JavaScript, HTML, CSS
+- Backend: Node.js, Express
+- Database: MongoDB (if used)
+- Tools: GitHub, REST APIs
 
-## Add to cart
-- “Add to cart” button is always visible; it is **enabled** only while spaces are available, and shows a **disabled** button otherwise.  
-- Adding to cart reduces the remaining spaces **logically** (`availableInventory - cartCount`).  
-- Remove from cart puts the space back.
+## Architecture
+The frontend communicates with the backend via REST APIs. Data is retrieved dynamically and rendered on the client side.
 
-## Shopping cart
-- The **cart button** is disabled when empty; clicking it toggles **list ⇄ cart**.  
-- The cart lists all items and allows **removal**.  
-- Shows **total** and **item count**.
+## Example Functionality
+- Display list of lessons/products
+- Add items to cart / booking system
+- Send requests to backend API
+- Update UI based on server responses
 
-## Checkout
-- **On the cart page**.  
-- Input validation:
-  - **First name / Last name:** letters only  
-  - **Phone:** numbers only  
-- The **Place Order** button is enabled only when the inputs are valid and the cart is not empty.  
-- Submitting shows a confirmation and resets the cart.
+## Screenshots
+(Add screenshots here)
 
+## How to Run
+1. Clone the repository  
+2. Install dependencies  
+3. Run the frontend  
+4. Start the backend server  
 
-
-## NOTE
-- This repo intentionally avoids Vue CLI; it’s a **static** Vue app for GitHub Pages.  
-- No libraries are used that replicate Vue features (compliant with the brief).  
-- Images and paths are case-sensitive on GitHub Pages (folder `Images/`).
-
+## Future Improvements
+- Improve UI/UX design
+- Add authentication system
+- Deploy using cloud infrastructure
