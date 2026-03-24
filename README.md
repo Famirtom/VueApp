@@ -5,6 +5,9 @@ This project is a full-stack web application built with Vue.js (frontend) and a 
 
 The application allows users to browse lessons, interact with content, and simulate a simple booking/purchasing workflow.
 
+## Backend Repository
+https://github.com/Famirtom/VueApp-Backend
+
 ## Features
 - Dynamic frontend built with Vue.js
 - REST API integration with backend
