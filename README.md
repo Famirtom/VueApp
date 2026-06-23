@@ -30,16 +30,8 @@ The frontend communicates with the backend via REST APIs. Data is retrieved dyna
 - Send requests to backend API
 - Update UI based on server responses
 
-## Screenshots
-(Add screenshots here)
-
 ## How to Run
 1. Clone the repository  
 2. Install dependencies  
 3. Run the frontend  
 4. Start the backend server  
-
-## Future Improvements
-- Improve UI/UX design
-- Add authentication system
-- Deploy using cloud infrastructure
